@@ -10,14 +10,18 @@ namespace ATM_BLL
         CustomerManager cManager;
         public ATMBrain()
         {
+            init();
+            
+        }
 
+        public void init()
+        {
             context = ApplicationContext.getContext();
             ATMData data = ATMDao.loadData();
             context.Data = data;
             cManager = new CustomerManager(data.customerList);
             setListners();
         }
-
         public Boolean logInUser(String username, String pass, Power p)
         {
             if(p==Power.Root)
@@ -51,32 +55,59 @@ namespace ATM_BLL
         }
 
 
-        public Boolean withdrawCash(int amount)
+        public Boolean withdrawCash(int amount,Boolean transfer)
         {
+            Console.WriteLine($"withdrawn cash amount ${amount}");
+            if (context.CurrentCustomer.status == Customer.Status.Disabled)
+            {
+                context.Error = "Account disabled";
+                return false;
+            }
+
+            int alreadyWithdrawn = cManager.getTodaysTransactionOfCustomer(context.CurrentCustomer.id);
+
+            if(alreadyWithdrawn+amount>=20000)
+            {
+                context.Error = "Limit reached";
+                return false;
+            }
+
             int balance = context.CurrentCustomer.balance;
             if(balance-amount<0)
             {
                 context.Error = "Not Enough Cash";
                 return false;
             }
+            
 
             context.CurrentCustomer.balance -= amount;
-            context.CurrentCustomer.addReciept(DateTime.Now.ToString("dd/MM/yyyy"), amount, context.CurrentCustomer.balance);
+            if (transfer)
+            {
+                context.CurrentCustomer.addReciept(DateTime.Now.ToString("dd/MM/yyyy"), amount, context.CurrentCustomer.balance, Customer.Reciept.RecieptType.TRANSFERED);
+            }
+            else
+            {
+                context.CurrentCustomer.addReciept(DateTime.Now.ToString("dd/MM/yyyy"), amount, context.CurrentCustomer.balance, Customer.Reciept.RecieptType.WITHDRAWN);
+            }
             return true;
         }
 
         public Boolean depositCash(int amount, int? id)
         {
 
+            
             int unWrappedID = id ?? -1;
             if(unWrappedID==-1)
             {
                 context.CurrentCustomer.balance += amount;
+                context.CurrentCustomer.addReciept(DateTime.Now.ToString("dd/MM/yyyy"), amount, context.CurrentCustomer.balance,Customer.Reciept.RecieptType.DEPOSITED);
                 return true;
             }
 
             Customer c = getInfoOfCustomerByID(unWrappedID);
             c.balance += amount;
+            c.addReciept(DateTime.Now.ToString("dd/MM/yyyy"), amount, c.balance, Customer.Reciept.RecieptType.DEPOSITED);
+
             return true;
             
         }

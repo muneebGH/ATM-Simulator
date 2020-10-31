@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using ATM_BO;
 using ATM_BLL;
+
 namespace ATM_view
 {
     public class Driver
     {
 
+
         private ATMBrain brain;
         private ApplicationContext context;
         private Menu menu;
+        Action<String> cl = Console.WriteLine;
 
 
         public Driver()
@@ -18,44 +21,61 @@ namespace ATM_view
             brain = new ATMBrain();
             context = ApplicationContext.getContext();
             menu = new Menu();
+           
+           
         }
 
 
         public void runApplication()
         {
-            int userType = menu.presentUserChooseScreen();
-            Power choosenPower;
-            if (userType == 1)
+
+            try
             {
-                choosenPower = Power.Root;
-            }
-            else
-            {
-                choosenPower = Power.Noob;
-            }
-            Boolean passedLoginPhase = false;
-            while (!passedLoginPhase)
-            {
-                Dictionary<String, String> credentials = menu.presentLoginMenu(choosenPower);
-                Boolean success = brain.logInUser(credentials["username"], credentials["password"], choosenPower);
-                if (!success)
+                int userType = menu.presentUserChooseScreen();
+
+
+                Power choosenPower;
+                if (userType == 1)
                 {
-                    Console.WriteLine("--" + context.Error + "----");
-                    context.clearErrors();
+                    choosenPower = Power.Root;
                 }
                 else
                 {
-                    passedLoginPhase = true;
+                    choosenPower = Power.Noob;
                 }
-            }
-            if (choosenPower == Power.Noob)
+
+                Boolean passedLoginPhase = false;
+                while (!passedLoginPhase)
+                {
+                    Dictionary<String, String> credentials = menu.presentLoginMenu(choosenPower);
+                    Boolean success = brain.logInUser(credentials["username"], credentials["password"], choosenPower);
+                    if (!success)
+                    {
+                        Console.WriteLine("--" + context.Error + "----");
+                        context.clearErrors();
+                    }
+                    else
+                    {
+                        passedLoginPhase = true;
+                    }
+                }
+
+                if (choosenPower == Power.Noob)
+                {
+                    handleCustomerMenu();
+                }
+                else
+                {
+                    handleAdminMenu();
+                }
+            }catch(Exception e)
             {
-                handleCustomerMenu();
+                Console.WriteLine($" Error {e.Message}");
+                Console.WriteLine("--saving state--");
+                brain.performExitOperations();
+                cl("Exiting...");
             }
-            else
-            {
-                handleAdminMenu();
-            }
+            
 
 
         }
@@ -95,7 +115,7 @@ namespace ATM_view
                         Console.WriteLine("--Current balance--");
                         Console.WriteLine($"Account id:{context.CurrentCustomer.id}");
                         Console.WriteLine($"Date: {DateTime.Today}");
-                        Console.WriteLine(context.CurrentCustomer.balance);
+                        Console.WriteLine($"Balance : {context.CurrentCustomer.balance}");
                         break;
                     default:
                         brain.performExitOperations();
@@ -119,19 +139,40 @@ namespace ATM_view
             {
                 amount = menu.presentNormalCashMenu();
             }
-            Boolean success = brain.withdrawCash(amount);
+            Boolean success = brain.withdrawCash(amount,false);
             if (context.HasError)
             {
                 Console.WriteLine(context.Error);
                 context.clearErrors();
+                return false;
             }
             else
             {
-                Console.WriteLine("--reciept--");
-                Console.WriteLine($"Account id : {context.CurrentCustomer.id}");
-                Console.WriteLine($"Date: {context.CurrentCustomer.reciepts[context.CurrentCustomer.reciepts.Count - 1].date}");
-                Console.WriteLine($"Amount withdrew: {context.CurrentCustomer.reciepts[context.CurrentCustomer.reciepts.Count - 1].amountAddedOrSubtracted}");
-                Console.WriteLine($"Balance : {context.CurrentCustomer.reciepts[context.CurrentCustomer.reciepts.Count - 1].balance}");
+                while(true)
+                {
+                    cl("Do you wish to Print a reciept (Y/N)");
+                    String input = Console.ReadLine().ToLower();
+                    if(input=="y")
+                    {
+                        Console.WriteLine("--reciept--");
+                        Console.WriteLine($"Account id : {context.CurrentCustomer.id}");
+                        Console.WriteLine($"Date: {context.CurrentCustomer.reciepts[context.CurrentCustomer.reciepts.Count - 1].date}");
+                        Console.WriteLine($"Amount Withdrawn : {context.CurrentCustomer.reciepts[context.CurrentCustomer.reciepts.Count - 1].amountAddedOrSubtracted}");
+                        Console.WriteLine($"Balance : {context.CurrentCustomer.reciepts[context.CurrentCustomer.reciepts.Count - 1].balance}");
+                        break;
+                    }
+                    else if(input=="n")
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        cl("Bad input: please try again");
+                    }
+                }
+                
+
+                
             }
             return success;
 
@@ -142,7 +183,42 @@ namespace ATM_view
         private Boolean handleDepositCash()
         {
             int cash = menu.presentDepositCashMenu();
-            return brain.depositCash(cash,null);
+            Boolean success= brain.depositCash(cash,null);
+            if(!success)
+            {
+                if(context.HasError)
+                {
+                    cl(context.Error);
+                    context.clearErrors();
+                    return false;
+                }
+            }
+
+            cl("Do you wish to print reciept (Y/N)");
+            while (true)
+            {
+                string input = Console.ReadLine().ToLower();
+                if (input == "y")
+                {
+                    Console.WriteLine("--reciept--");
+                    Console.WriteLine($"Account id : {context.CurrentCustomer.id}");
+                    Console.WriteLine($"Date: {context.CurrentCustomer.reciepts[context.CurrentCustomer.reciepts.Count - 1].date}");
+                    Console.WriteLine($"Amount Deposited : {context.CurrentCustomer.reciepts[context.CurrentCustomer.reciepts.Count - 1].amountAddedOrSubtracted}");
+                    Console.WriteLine($"Balance : {context.CurrentCustomer.reciepts[context.CurrentCustomer.reciepts.Count - 1].balance}");
+                    break;
+                }
+                else if (input == "n")
+                {
+                    break;
+                }
+                else
+                {
+                    cl("bad input try again...");
+                }
+            }
+
+            return true;
+
         }
 
 
@@ -165,6 +241,7 @@ namespace ATM_view
                     accountID = int.Parse(Console.ReadLine());
                     if(accountID!=values["ID"])
                     {
+                        cl("Different id entered: Looks like you dont want to trasfer. ok!");
                         return true;
                     }
                     else
@@ -179,13 +256,43 @@ namespace ATM_view
                 }
             }
 
-            Boolean success = brain.withdrawCash(accountID);
+            Boolean success = brain.withdrawCash(values["money"],true);
+            if(!success)
+            {
+            
+                return false;
+            }
+
+            success=brain.depositCash(values["money"], values["ID"]);
             if(!success)
             {
                 return false;
             }
 
-            return brain.depositCash(values["money"], values["ID"]);
+            cl("Do you wish to print reciept: (Y/N):");
+            while(true)
+            {
+                string input = Console.ReadLine().ToLower();
+                if(input=="y")
+                {
+                    Console.WriteLine("--reciept--");
+                    Console.WriteLine($"Account id : {context.CurrentCustomer.id}");
+                    Console.WriteLine($"Date: {context.CurrentCustomer.reciepts[context.CurrentCustomer.reciepts.Count - 1].date}");
+                    Console.WriteLine($"Amount Transferred : {context.CurrentCustomer.reciepts[context.CurrentCustomer.reciepts.Count - 1].amountAddedOrSubtracted}");
+                    Console.WriteLine($"Balance : {context.CurrentCustomer.reciepts[context.CurrentCustomer.reciepts.Count - 1].balance}");
+                    break;
+                }
+                else if(input=="n")
+                {
+                    break;
+                }
+                else
+                {
+                    cl("bad input try again...");
+                }
+            }
+
+            return true;
 
             
         }

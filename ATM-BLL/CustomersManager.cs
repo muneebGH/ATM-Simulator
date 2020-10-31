@@ -201,5 +201,25 @@ namespace ATM_BO
 
             return reciepts;
         }
+
+        public int getTodaysTransactionOfCustomer(int id)
+        {
+            int amount = -1;
+            Customer cstmr = customerList.Find(c => c.id == id);
+            foreach(Customer.Reciept r in cstmr.reciepts)
+            {
+                String dt = r.date;
+                if(dt==DateTime.Now.ToString("dd/MM/yyyy"))
+                {
+                    if(r.recieptType==Customer.Reciept.RecieptType.WITHDRAWN)
+                    {
+                        amount += r.amountAddedOrSubtracted;
+                    }
+                }
+
+            }
+
+            return amount;
+        }
     }
 }

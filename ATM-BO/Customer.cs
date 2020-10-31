@@ -27,13 +27,20 @@ namespace ATM_BO
             public String date;
             public int amountAddedOrSubtracted;
             public int balance;
+            public RecieptType recieptType;
 
-            public Reciept(int id, String date, int amount, int balance)
+            public Reciept(int id, String date, int amount, int balance,RecieptType rt)
             {
                 this.id = id;
                 this.date = date;
                 this.amountAddedOrSubtracted = amount;
                 this.balance = balance;
+                this.recieptType = rt;
+            }
+
+            public enum RecieptType
+            {
+                DEPOSITED,WITHDRAWN,TRANSFERED,NONE
             }
 
         }
@@ -45,7 +52,7 @@ namespace ATM_BO
             this.reciepts = new List<Reciept>();
         }
 
-        public void addReciept(String d, int amount, int b)
+        public void addReciept(String d, int amount, int b, Reciept.RecieptType t)
         {
             if (d == null)
             {
@@ -56,7 +63,7 @@ namespace ATM_BO
                 b = balance;
             }
 
-            reciepts.Add(new Reciept(id, d, amount, b));
+            reciepts.Add(new Reciept(id, d, amount, b,t));
         }
 
     }

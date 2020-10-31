@@ -8,92 +8,210 @@ namespace ATM_view
 {
     public class Menu
     {
-       
+
+        Action<String> cl = Console.WriteLine;
         public Menu()
         {
         }
 
         public int presentUserChooseScreen()
         {
-            Console.WriteLine("1: Login as Admin");
-            Console.WriteLine("2: Login as Customer");
-            return int.Parse(Console.ReadLine());
+            int ret;
+            while(true)
+            {
+                Console.WriteLine("1: Login as Admin");
+                Console.WriteLine("2: Login as Customer");
+                try
+                {
+                    ret=int.Parse(Console.ReadLine());
+                    if(ret==1 || ret==2)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Bad range: again");
+                    }
+                    
+                }
+                catch(Exception _) { Console.WriteLine("Wrong input: Again"); }
+            }
+            return ret;
         }
 
         public Dictionary<String, String> presentLoginMenu(Power p)
         {
-            if (p == Power.Root)
+            Dictionary<String, String> d;
+            while (true)
             {
-                Console.WriteLine("Admin Login");
+                if (p == Power.Root)
+                {
+                    Console.WriteLine("-----Admin Login-----");
+                }
+                else if (p == Power.Noob)
+                {
+                    Console.WriteLine("----Customer Login----");
+                }
+                Console.WriteLine("Enter login");
+                String username = Console.ReadLine();
+                Console.WriteLine("Enter password");
+                String pass = Console.ReadLine();
+                if(username!="" && pass!="")
+                {
+                    d = new Dictionary<String, String>();
+                    d.Add("username", username);
+                    d.Add("password", pass);
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("bad inputs: again");
+                }
+                
             }
-            else if (p == Power.Noob)
-            {
-                Console.WriteLine("Customer Login");
-            }
-            Console.WriteLine("Enter login");
-            String username = Console.ReadLine();
-            Console.WriteLine("Enter password");
-            String pass = Console.ReadLine();
-            Dictionary<String, String> d = new Dictionary<String, String>();
-            d.Add("username", username);
-            d.Add("password", pass);
+            
             return d;
         }
 
 
         public int presentCustomerMenu()
         {
-            Console.WriteLine("Customer menu");
-            Console.WriteLine("1: Withdraw cash");
-            Console.WriteLine("2: CashTransfer");
-            Console.WriteLine("3: Deposit cash");
-            Console.WriteLine("4: Display Balance");
-            Console.WriteLine("5: Exit");
-            return int.Parse(Console.ReadLine());
+            int ret;
+            while(true)
+            {
+                Console.WriteLine("Customer menu");
+                Console.WriteLine("1: Withdraw cash");
+                Console.WriteLine("2: CashTransfer");
+                Console.WriteLine("3: Deposit cash");
+                Console.WriteLine("4: Display Balance");
+                Console.WriteLine("5: Exit");
+                try
+                {
+                    ret = int.Parse(Console.ReadLine());
+                    if(ret>=1 && ret<=5)
+                    {
+                        break;
+                        
+                    }
+                    else
+                    {
+                        cl("Wrong input range try again");
+                    }
+                }catch(Exception _)
+                {
+                    cl("Bad input: try again...");
+                }
+                
+
+            }
+
+            return ret;
+           
         }
 
         public int withdrawCashMenu()
         {
-            Console.WriteLine("1: fast cash");
-            Console.WriteLine("2: Normal cash");
-            return int.Parse(Console.ReadLine());
+            int ret;
+            while(true)
+            {
+                Console.WriteLine("1: fast cash");
+                Console.WriteLine("2: Normal cash");
+                try
+                {
+                    ret = int.Parse(Console.ReadLine());
+                    if(ret==1 || ret==2)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        cl("bad input range: try again...");
+                    }
+                }
+                catch(Exception _)
+                {
+                    cl("bad input: try again...");
+                }
+                
+            }
+
+            return ret;
+            
         }
 
         public int presentFastCashMenu()
         {
-            Console.WriteLine("1: 500");
-            Console.WriteLine("2: 1000");
-            Console.WriteLine("3: 2000");
-            Console.WriteLine("4: 5000");
-            Console.WriteLine("5: 10000");
-            Console.WriteLine("6: 15000");
-            Console.WriteLine("7: 20000");
-            int choice = int.Parse(Console.ReadLine());
-            switch (choice)
+            while(true)
             {
-                case 1:
-                    return 500;
-                case 2:
-                    return 100;
-                case 3:
-                    return 2000;
-                case 4:
-                    return 5000;
-                case 5:
-                    return 10000;
-                case 6:
-                    return 15000;
-                case 7:
-                    return 20000;
-                default:
-                    return 500;
+                Console.WriteLine("1: 500");
+                Console.WriteLine("2: 1000");
+                Console.WriteLine("3: 2000");
+                Console.WriteLine("4: 5000");
+                Console.WriteLine("5: 10000");
+                Console.WriteLine("6: 15000");
+                Console.WriteLine("7: 20000");
+                try
+                {
+                    int choice = int.Parse(Console.ReadLine());
+                    if(choice>=1 && choice<=7)
+                    {
+                        switch (choice)
+                        {
+                            case 1:
+                                return 500;
+                            case 2:
+                                return 100;
+                            case 3:
+                                return 2000;
+                            case 4:
+                                return 5000;
+                            case 5:
+                                return 10000;
+                            case 6:
+                                return 15000;
+                            case 7:
+                                return 20000;
+                            default:
+                                return 500;
+                        }
+                    }
+                    else
+                    {
+                        cl("wrong input range: try again...");
+                    }
+                    
+                }
+                catch(Exception _)
+                {
+                    cl("bad input: try again...");
+                }
             }
+            
         }
 
         public int presentNormalCashMenu()
         {
-            Console.WriteLine("Enter the ammount to withdraw");
-            return int.Parse(Console.ReadLine());
+            int ret;
+            while(true)
+            {
+                Console.WriteLine("Enter the ammount to withdraw");
+                try
+                {
+                    ret= int.Parse(Console.ReadLine());
+                    if(ret>0)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        cl("This input isnt allowed...");
+                    }
+                }catch(Exception _)
+                {
+                    cl("bad input: try again...");
+                }
+            }
+            return ret;
         }
 
 
@@ -121,13 +239,36 @@ namespace ATM_view
             Console.WriteLine("4: Search existing account");
             Console.WriteLine("5: View reports");
             Console.WriteLine("6: Exit");
+           
             return int.Parse(Console.ReadLine());
         }
 
         public int presentDepositCashMenu()
         {
-            Console.WriteLine("Enter ammount to deposit");
-            return int.Parse(Console.ReadLine());
+            int ret;
+            while(true)
+            {
+                Console.WriteLine("Enter ammount to deposit");
+                try
+                {
+                    ret = int.Parse(Console.ReadLine());
+                    if(ret>0)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        cl("This amount is allowed");
+                    }
+                }
+                catch(Exception _)
+                {
+                    cl("Bad input try again");
+                }
+            }
+
+            return ret;
+            
         }
 
         public Customer getNewCustomerInfo(int id)
@@ -226,11 +367,12 @@ namespace ATM_view
         public Dictionary<String,int> presentMoneyTransferScreen()
         {
             Dictionary<String, int> values = new Dictionary<string, int>();
-            Console.WriteLine("Enter amount in multiples of 500");
+            
             int amount = 0;
             Boolean repeat = true;
             while(repeat)
             {
+                Console.WriteLine("Enter amount in multiples of 500");
                 try
                 {
                     amount = int.Parse(Console.ReadLine());
@@ -247,24 +389,34 @@ namespace ATM_view
                 catch (Exception e)
                 {
 
+                    cl("bad input: try again...");
                     repeat = true;
                 }
             }
 
-            Console.WriteLine("Enter the account number you want to transfer to: ");
+            
             int accountNumber = -1;
             repeat = true;
             while (repeat)
             {
+                Console.WriteLine("Enter the account number you want to transfer to: ");
                 try
                 {
                     accountNumber = int.Parse(Console.ReadLine());
-                    repeat = false;
+                    if(accountNumber>=0)
+                    {
+                        repeat = false;
+                    }
+                    else
+                    {
+                        cl("bad input: try again...");
+                    }
+                    
           
                 }
                 catch (Exception e)
                 {
-
+                    cl("bad input: try again...");
                     repeat = true;
                 }
             }
