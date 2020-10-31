@@ -1,0 +1,41 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ATM-EAD", "ATM-EAD.csproj", "{ACA58A5D-CAB0-421A-BBA5-63460AEC567E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ATM-view", "ATM-view\ATM-view.csproj", "{03AF5C86-D54E-40A8-AAA4-EDD9C01752B7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ATM-BO", "ATM-BO\ATM-BO.csproj", "{FFDFA361-1899-4E28-BDA2-0D4919EB60A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ATM-BLL", "ATM-BLL\ATM-BLL.csproj", "{EBDD3CAF-433D-4EF2-A7B0-F5F64FA65C77}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ATM-DAL", "ATM-DAL\ATM-DAL.csproj", "{87DADB53-2AB4-4536-A707-4950AB58517D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|anycpu = Debug|anycpu
+		Release|anycpu = Release|anycpu
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ACA58A5D-CAB0-421A-BBA5-63460AEC567E}.Debug|anycpu.ActiveCfg = Debug|anycpu
+		{ACA58A5D-CAB0-421A-BBA5-63460AEC567E}.Debug|anycpu.Build.0 = Debug|anycpu
+		{ACA58A5D-CAB0-421A-BBA5-63460AEC567E}.Release|anycpu.ActiveCfg = Release|anycpu
+		{ACA58A5D-CAB0-421A-BBA5-63460AEC567E}.Release|anycpu.Build.0 = Release|anycpu
+		{03AF5C86-D54E-40A8-AAA4-EDD9C01752B7}.Debug|anycpu.ActiveCfg = Debug|Any CPU
+		{03AF5C86-D54E-40A8-AAA4-EDD9C01752B7}.Debug|anycpu.Build.0 = Debug|Any CPU
+		{03AF5C86-D54E-40A8-AAA4-EDD9C01752B7}.Release|anycpu.ActiveCfg = Release|Any CPU
+		{03AF5C86-D54E-40A8-AAA4-EDD9C01752B7}.Release|anycpu.Build.0 = Release|Any CPU
+		{FFDFA361-1899-4E28-BDA2-0D4919EB60A7}.Debug|anycpu.ActiveCfg = Debug|Any CPU
+		{FFDFA361-1899-4E28-BDA2-0D4919EB60A7}.Debug|anycpu.Build.0 = Debug|Any CPU
+		{FFDFA361-1899-4E28-BDA2-0D4919EB60A7}.Release|anycpu.ActiveCfg = Release|Any CPU
+		{FFDFA361-1899-4E28-BDA2-0D4919EB60A7}.Release|anycpu.Build.0 = Release|Any CPU
+		{EBDD3CAF-433D-4EF2-A7B0-F5F64FA65C77}.Debug|anycpu.ActiveCfg = Debug|Any CPU
+		{EBDD3CAF-433D-4EF2-A7B0-F5F64FA65C77}.Debug|anycpu.Build.0 = Debug|Any CPU
+		{EBDD3CAF-433D-4EF2-A7B0-F5F64FA65C77}.Release|anycpu.ActiveCfg = Release|Any CPU
+		{EBDD3CAF-433D-4EF2-A7B0-F5F64FA65C77}.Release|anycpu.Build.0 = Release|Any CPU
+		{87DADB53-2AB4-4536-A707-4950AB58517D}.Debug|anycpu.ActiveCfg = Debug|Any CPU
+		{87DADB53-2AB4-4536-A707-4950AB58517D}.Debug|anycpu.Build.0 = Debug|Any CPU
+		{87DADB53-2AB4-4536-A707-4950AB58517D}.Release|anycpu.ActiveCfg = Release|Any CPU
+		{87DADB53-2AB4-4536-A707-4950AB58517D}.Release|anycpu.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
