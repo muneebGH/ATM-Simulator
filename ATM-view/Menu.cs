@@ -224,16 +224,11 @@ namespace ATM_view
                 return;
             }
 
-            Console.WriteLine("===== Search Results====");
+            Console.WriteLine(String.Format("{0,-5} {1,-20} {2,-25} {3,-10} {4,-15} {5,-10} \n","ID","Username","Holders Name","Type","Balance","Status"));
 
             foreach (Customer c in ls)
             {
-                Console.WriteLine($"Account id{c.id}");
-                Console.WriteLine($"username{c.userName}");
-                Console.WriteLine($"name {c.name}");
-                Console.WriteLine($"Account Type {c.type.ToString()}");
-                Console.WriteLine($"Account balance {c.balance}");
-                Console.WriteLine($"Account status {c.status.ToString()}");
+                Console.WriteLine(String.Format("{0,-5} {1,-20} {2,-25} {3,-10} {4,-15} {5,-10}",c.id,c.userName,c.name,c.type,c.balance,c.status));
             }
         }
 
@@ -426,6 +421,7 @@ namespace ATM_view
 
             Console.WriteLine("Starting balance");
             int balance = -1;
+
             while (balance == -1)
             {
                 try
@@ -439,8 +435,10 @@ namespace ATM_view
                 }
                 catch
                 {
-                    cl("Bad input: Again plz");
+                    cl("Existing balance is selected");
+
                     balance = -1;
+                    break;
                 }
             }
 

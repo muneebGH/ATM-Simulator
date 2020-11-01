@@ -325,6 +325,7 @@ namespace ATM_view
                             cl("--Exit--");
                             return;
                         }
+                        cl($"Account successfuly created and account id is {context.Data.presentID - 1}");
                         break;
                     case 2:
                         success = handleDelExistingAccount();
@@ -334,6 +335,7 @@ namespace ATM_view
 
                             context.clearErrors();
                         }
+                        cl("Account deleted successfuly");
                         
                         break;
                     case 3:
@@ -351,6 +353,7 @@ namespace ATM_view
                             {
                                 c = menu.getNewCustomerInfoToUpdate(id);
                                 brain.updateCustomer(c);
+                                cl("Account updated successfuly");
                                 break;
                             }
                             
@@ -401,15 +404,20 @@ namespace ATM_view
             try
             {
                 List<Customer.Reciept> reciepts = brain.getCustomerRecieptsInRange(values["startDate"], values["endDate"]);
-                foreach(Customer.Reciept r in reciepts)
+                if(reciepts==null || reciepts.Count==0)
                 {
-                    cl($"Reciept type: {r.recieptType.ToString()}");
-                    cl($"userid : {r.id}");
-                    cl($"Holders name: {brain.getInfoOfCustomerByID(r.id).name}");
-                    cl($"Amount : {r.amountAddedOrSubtracted}");
-                    cl($"Date : {r.date}");
-
+                    cl("No record found");
                 }
+                else
+                {
+                    Console.WriteLine(String.Format("{0,-16} {1,-5} {2,-25} {3,-15} {4,-25} \n", "Transaction Type", "ID", "Holders Name", "Amount", "Date"));
+                    foreach (Customer.Reciept r in reciepts)
+                    {
+                        Console.WriteLine(String.Format("{0,-16} {1,-5} {2,-25} {3,-15} {4,-25}", r.recieptType.ToString().ToLower(),r.id, brain.getInfoOfCustomerByID(r.id).name, r.amountAddedOrSubtracted,r.date));
+
+                    }
+                }
+                
             }
             catch
             {
@@ -521,14 +529,13 @@ namespace ATM_view
                 string input = "";
                 while(input=="" || (input!="y" && input!="n"))
                 {
-                    Console.WriteLine($"You sure you wana remove {cstmr.name}");
+                    Console.WriteLine($"You sure you wana remove {cstmr.name} (Y/N)");
                     input = Console.ReadLine().ToLower();
                 }
 
                 if(input=="y")
                 {
                     brain.deleteCustomer(id);
-                    cl("Successfully deleted");
                 }
                 else
                 {
