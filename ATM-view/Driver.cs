@@ -405,27 +405,33 @@ namespace ATM_view
             } catch(Exception e)
             {
                 id = null;
-                Console.WriteLine(e.Message);
+               
             }
             
             Console.WriteLine("User name");
             string username = Console.ReadLine();
             Console.WriteLine("account holders name");
             string name = Console.ReadLine();
-            Console.WriteLine("Type savings/current");
-            String typeStr = Console.ReadLine().ToLower();
-            Customer.AccountType type;
-            if(typeStr=="savings")
+            string type = "";
+            do
             {
-                type = Customer.AccountType.Savings;
+                Console.WriteLine("Type: Savings / Current ");
+                type = Console.ReadLine().ToLower();
             }
-            else if (typeStr == "current")
+            while (type != "" && (type != "savings" && type != "current"));
+
+            Customer.AccountType t;
+            if(type=="savings")
             {
-                type = Customer.AccountType.Current;
+                t = Customer.AccountType.Savings;
+            }
+            else if (type == "current")
+            {
+                t = Customer.AccountType.Current;
             }
             else
             {
-                type = Customer.AccountType.None;
+                t = Customer.AccountType.None;
             }
 
             Console.WriteLine("Balance:");
@@ -435,12 +441,17 @@ namespace ATM_view
                 balance = int.Parse(Console.ReadLine());
             }catch(Exception e)
             {
-                Console.WriteLine(e.Message);
+                
                 balance = null;
             }
-            
-            Console.WriteLine("Status");
-            String statusStr = Console.ReadLine().ToLower();
+            string statusStr = "";
+            do
+            {
+                Console.WriteLine("Status: Active/Disabled");
+                statusStr = Console.ReadLine().ToLower();
+            }
+            while (statusStr != "" && (statusStr != "active" && statusStr != "disabled"));
+
             Customer.Status status;
             if (statusStr == "active")
             {
@@ -453,7 +464,7 @@ namespace ATM_view
             {
                 status = Customer.Status.None;
             }
-            return brain.findBy(id, username, name, type, balance, status);
+            return brain.findBy(id, username, name, t, balance, status);
         }
 
 

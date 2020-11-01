@@ -17,14 +17,14 @@ namespace ATM_view
         public int presentUserChooseScreen()
         {
             int ret;
-            while(true)
+            while (true)
             {
                 Console.WriteLine("1: Login as Admin");
                 Console.WriteLine("2: Login as Customer");
                 try
                 {
-                    ret=int.Parse(Console.ReadLine());
-                    if(ret==1 || ret==2)
+                    ret = int.Parse(Console.ReadLine());
+                    if (ret == 1 || ret == 2)
                     {
                         break;
                     }
@@ -32,9 +32,9 @@ namespace ATM_view
                     {
                         Console.WriteLine("Bad range: again");
                     }
-                    
+
                 }
-                catch(Exception _) { Console.WriteLine("Wrong input: Again"); }
+                catch (Exception _) { Console.WriteLine("Wrong input: Again"); }
             }
             return ret;
         }
@@ -56,7 +56,7 @@ namespace ATM_view
                 String username = Console.ReadLine();
                 Console.WriteLine("Enter password");
                 String pass = Console.ReadLine();
-                if(username!="" && pass!="")
+                if (username != "" && pass != "")
                 {
                     d = new Dictionary<String, String>();
                     d.Add("username", username);
@@ -67,9 +67,9 @@ namespace ATM_view
                 {
                     Console.WriteLine("bad inputs: again");
                 }
-                
+
             }
-            
+
             return d;
         }
 
@@ -77,7 +77,7 @@ namespace ATM_view
         public int presentCustomerMenu()
         {
             int ret;
-            while(true)
+            while (true)
             {
                 Console.WriteLine("Customer menu");
                 Console.WriteLine("1: Withdraw cash");
@@ -88,38 +88,38 @@ namespace ATM_view
                 try
                 {
                     ret = int.Parse(Console.ReadLine());
-                    if(ret>=1 && ret<=5)
+                    if (ret >= 1 && ret <= 5)
                     {
                         break;
-                        
+
                     }
                     else
                     {
                         cl("Wrong input range try again");
                     }
-                }catch(Exception _)
+                } catch (Exception _)
                 {
                     cl("Bad input: try again...");
                 }
-                
+
 
             }
 
             return ret;
-           
+
         }
 
         public int withdrawCashMenu()
         {
             int ret;
-            while(true)
+            while (true)
             {
                 Console.WriteLine("1: fast cash");
                 Console.WriteLine("2: Normal cash");
                 try
                 {
                     ret = int.Parse(Console.ReadLine());
-                    if(ret==1 || ret==2)
+                    if (ret == 1 || ret == 2)
                     {
                         break;
                     }
@@ -128,20 +128,20 @@ namespace ATM_view
                         cl("bad input range: try again...");
                     }
                 }
-                catch(Exception _)
+                catch (Exception _)
                 {
                     cl("bad input: try again...");
                 }
-                
+
             }
 
             return ret;
-            
+
         }
 
         public int presentFastCashMenu()
         {
-            while(true)
+            while (true)
             {
                 Console.WriteLine("1: 500");
                 Console.WriteLine("2: 1000");
@@ -153,7 +153,7 @@ namespace ATM_view
                 try
                 {
                     int choice = int.Parse(Console.ReadLine());
-                    if(choice>=1 && choice<=7)
+                    if (choice >= 1 && choice <= 7)
                     {
                         switch (choice)
                         {
@@ -179,26 +179,26 @@ namespace ATM_view
                     {
                         cl("wrong input range: try again...");
                     }
-                    
+
                 }
-                catch(Exception _)
+                catch (Exception _)
                 {
                     cl("bad input: try again...");
                 }
             }
-            
+
         }
 
         public int presentNormalCashMenu()
         {
             int ret;
-            while(true)
+            while (true)
             {
                 Console.WriteLine("Enter the ammount to withdraw");
                 try
                 {
-                    ret= int.Parse(Console.ReadLine());
-                    if(ret>0)
+                    ret = int.Parse(Console.ReadLine());
+                    if (ret > 0)
                     {
                         break;
                     }
@@ -206,7 +206,7 @@ namespace ATM_view
                     {
                         cl("This input isnt allowed...");
                     }
-                }catch(Exception _)
+                } catch (Exception _)
                 {
                     cl("bad input: try again...");
                 }
@@ -217,6 +217,12 @@ namespace ATM_view
 
         public void displaySearchedCustomers(List<Customer> ls)
         {
+            if (ls == null || ls.Count==0)
+            {
+                cl("---No Results found---");
+                return;
+            }
+
             Console.WriteLine("===== Search Results====");
 
             foreach (Customer c in ls)
