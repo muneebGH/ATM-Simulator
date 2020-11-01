@@ -34,7 +34,8 @@ namespace ATM_DAL
             }
             catch(Exception e)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine("File not found to retrieve data");
+                Console.WriteLine("If its your first login, Dont worry it will be created once you exit the session");
             }
             return new ATMData();
         }

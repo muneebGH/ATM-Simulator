@@ -38,7 +38,7 @@ namespace ATM_BLL
 
                 }
             }
-            Customer customer = context.AllCustomers.Find(c => c.userName.Equals(username) && c.pinCode.Equals(pass) && c.power == p);
+            Customer customer = context.AllCustomers.Find(c => c.userName.Equals(username) && Util.encryptDecryptPassword(c.pinCode).Equals(pass) && c.power == p);
             if (customer == null)
             {
                 context.Error = "User not found";
@@ -150,6 +150,7 @@ namespace ATM_BLL
                 return false;
             }
             c.id = context.Data.presentID++;
+            c.pinCode = Util.encryptDecryptPassword(c.pinCode);
             cManager.addCustomer(c);
             return true;
             
