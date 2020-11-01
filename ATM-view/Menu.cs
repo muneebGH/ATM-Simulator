@@ -233,14 +233,39 @@ namespace ATM_view
 
         public int presentAdminMenu()
         {
-            Console.WriteLine("1: Create new account");
-            Console.WriteLine("2: Delete existing  account");
-            Console.WriteLine("3: Update Account information");
-            Console.WriteLine("4: Search existing account");
-            Console.WriteLine("5: View reports");
-            Console.WriteLine("6: Exit");
-           
-            return int.Parse(Console.ReadLine());
+
+            int ret;
+            while (true)
+            {
+
+                Console.WriteLine("1: Create new account");
+                Console.WriteLine("2: Delete existing  account");
+                Console.WriteLine("3: Update Account information");
+                Console.WriteLine("4: Search existing account");
+                Console.WriteLine("5: View reports");
+                Console.WriteLine("6: Exit");
+                try
+                {
+                    ret = int.Parse(Console.ReadLine());
+                    if (ret >= 1 && ret <= 6)
+                    {
+                        break;
+
+                    }
+                    else
+                    {
+                        cl("Wrong input range try again");
+                    }
+                }
+                catch (Exception _)
+                {
+                    cl("Bad input: try again...");
+                }
+
+
+            }
+
+            return ret;
         }
 
         public int presentDepositCashMenu()
@@ -271,29 +296,32 @@ namespace ATM_view
             
         }
 
-        public Customer getNewCustomerInfo(int id)
+        public Customer getNewCustomerInfo()
         {
-            Console.WriteLine("Login: ");
-            String username = Console.ReadLine();
-            Console.WriteLine("PinCode:");
-            String pinCode = Console.ReadLine();
-            Console.WriteLine("Holders name");
-            String name = Console.ReadLine();
-            Console.WriteLine("Type: Savings / Current ");
-            String type = Console.ReadLine().ToLower();
-            Console.WriteLine("Starting balance");
-            int balance = -1;
-            try
-            { 
-               balance = int.Parse(Console.ReadLine());
-            }catch(Exception e)
+            String username="", pinCode="", name="", type="", status = "";
+            while(username=="")
             {
-
-                balance = -1;
+                Console.WriteLine("Login: ");
+                username= Console.ReadLine();
             }
-             
-            Console.WriteLine("Status: Active/Disabled");
-            string status = Console.ReadLine().ToLower();
+
+            while(pinCode=="")
+            {
+                Console.WriteLine("PinCode:");
+                pinCode = Console.ReadLine();
+            }
+
+            while(name=="")
+            {
+                Console.WriteLine("Holders name");
+                name = Console.ReadLine();
+            }
+
+            while(type=="" || (type!="savings" && type!="current"))
+            {
+                Console.WriteLine("Type: Savings / Current ");
+                type = Console.ReadLine().ToLower();
+            }
             Customer.AccountType accType;
             if (type == "savings")
             {
@@ -306,6 +334,33 @@ namespace ATM_view
             else
             {
                 accType = Customer.AccountType.None;
+            }
+
+            Console.WriteLine("Starting balance");
+            int balance = -1;
+            while(balance==-1)
+            {
+                try
+                {
+                    balance = int.Parse(Console.ReadLine());
+                    if(balance>0)
+                    {
+                        break;
+                    }
+                    cl("Wrong input: again plz");
+                }
+                catch (Exception _)
+                {
+                    cl("Bad input: Again plz");
+                    balance = -1;
+                }
+            }
+            
+
+            while(status=="" || (status!="active" && status!="disabled"))
+            {
+                Console.WriteLine("Status: Active/Disabled");
+                status = Console.ReadLine().ToLower();
             }
 
             Customer.Status accStatus;
@@ -323,10 +378,89 @@ namespace ATM_view
                 accStatus = Customer.Status.None;
             }
 
-            return new Customer(id, name, pinCode, accType, accStatus,balance, username,Power.Noob);
+            return new Customer(-1, name, pinCode, accType, accStatus,balance, username,Power.Noob);
 
         }
 
+        public Customer getNewCustomerInfoToUpdate(int id)
+        {
+            String username = "", pinCode = "", name = "", type = "", status = "";
+            Console.WriteLine("Login: ");
+            username = Console.ReadLine();
+
+            Console.WriteLine("PinCode:");
+            pinCode = Console.ReadLine();
+        
+
+
+            Console.WriteLine("Holders name");
+            name = Console.ReadLine();
+        
+
+            while (type != "" || (type != "savings" && type != "current"))
+            {
+                Console.WriteLine("Type: Savings / Current ");
+                type = Console.ReadLine().ToLower();
+            }
+            Customer.AccountType accType;
+            if (type == "savings")
+            {
+                accType = Customer.AccountType.Savings;
+            }
+            else if (type == "current")
+            {
+                accType = Customer.AccountType.Current;
+            }
+            else
+            {
+                accType = Customer.AccountType.None;
+            }
+
+            Console.WriteLine("Starting balance");
+            int balance = -1;
+            while (balance == -1)
+            {
+                try
+                {
+                    balance = int.Parse(Console.ReadLine());
+                    if (balance > 0 || balance==-1)
+                    {
+                        break;
+                    }
+                    cl("wrong input: Plz try again");
+                }
+                catch (Exception _)
+                {
+                    cl("Bad input: Again plz");
+                    balance = -1;
+                }
+            }
+
+
+            while (status != "" || (status != "active" && status != "disabled"))
+            {
+                Console.WriteLine("Status: Active/Disabled");
+                status = Console.ReadLine().ToLower();
+            }
+
+            Customer.Status accStatus;
+
+            if (status == "active")
+            {
+                accStatus = Customer.Status.Active;
+            }
+            else if (status == "disabled")
+            {
+                accStatus = Customer.Status.Disabled;
+            }
+            else
+            {
+                accStatus = Customer.Status.None;
+            }
+
+            return new Customer(id, name, pinCode, accType, accStatus, balance, username, Power.Noob);
+
+        }
 
         public int getCustomerID()
         {

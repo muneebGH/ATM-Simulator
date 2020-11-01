@@ -308,10 +308,18 @@ namespace ATM_view
                 switch (choose)
                 {
                     case 1:
-                        Customer c = menu.getNewCustomerInfo(-1);
+                        Customer c = menu.getNewCustomerInfo();
                         Boolean success = brain.addUser(c);
                         if (!success)
                         {
+                            cl(context.Error);
+                            context.clearErrors();
+                            context.RootMode = false;
+                            context.CurrentCustomer = null;
+                            context.SomeoneLoggedIn = false;
+                            cl("Logged out");
+                            brain.performExitOperations();
+                            cl("--Exit--");
                             return;
                         }
                         break;
@@ -333,7 +341,7 @@ namespace ATM_view
                             id = menu.getCustomerID();
                             c = brain.getInfoOfCustomerByID(id);
                         } while (context.HasError);
-                        c = menu.getNewCustomerInfo(id);
+                        c = menu.getNewCustomerInfoToUpdate(id);
                         brain.updateCustomer(c);
                         break;
                     case 4:
