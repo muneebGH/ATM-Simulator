@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using ATM_BO;
 using ATM_BLL;
+using System.Text.RegularExpressions;
 
 namespace ATM_view
 {
@@ -599,7 +600,7 @@ namespace ATM_view
                         Console.WriteLine("Wrong input try again");
                         repeat = true;
                     }
-                }catch(Exception e)
+                }catch
                 {
                     Console.WriteLine("Bad input");
                     repeat = true;
@@ -614,9 +615,10 @@ namespace ATM_view
         {
             int min = -1;
             int max = -1;
-            Console.WriteLine("Enter the minimum amount");
+            
             while(true)
             {
+                Console.WriteLine("Enter the minimum amount");
                 try
                 {
                     min = int.Parse(Console.ReadLine());
@@ -629,19 +631,20 @@ namespace ATM_view
                         Console.WriteLine("No not in good range");
                     }
                 }
-                catch(Exception e)
+                catch
                 {
                     Console.WriteLine("Bad input try again");
 
                 }
             }
-            Console.WriteLine("Enter the maximum amount");
+            
             while (true)
             {
+                Console.WriteLine("Enter the maximum amount");
                 try
                 {
                     max = int.Parse(Console.ReadLine());
-                    if (min > 0)
+                    if (max > 0)
                     {
                         break;
                     }
@@ -650,7 +653,7 @@ namespace ATM_view
                         Console.WriteLine("No not in good range");
                     }
                 }
-                catch (Exception e)
+                catch
                 {
                     Console.WriteLine("Bad input try again");
 
@@ -669,10 +672,52 @@ namespace ATM_view
             String startDate;
             String endDate;
 
-            Console.WriteLine("Enter starting date");
-            startDate = Console.ReadLine();
-            Console.WriteLine("Enter end date:");
-            endDate = Console.ReadLine();
+            Regex re = new Regex(@"\d\d/\d\d/\d\d\d\d");
+            while (true)
+            {
+                Console.WriteLine("Enter starting date");
+                startDate = Console.ReadLine();
+                if(re.IsMatch(startDate))
+                {
+
+                    try
+                    {
+                        DateTime dt = DateTime.Parse(startDate);
+                        break;
+                    }catch
+                    {
+                        cl("Format is correct: But date isnt correct:");
+                    }
+                }
+                else
+                {
+                    cl("Formate of date isnt Correct: Make sure it is: dd/mm/yyyy");
+                }
+            }
+
+            while (true)
+            {
+                Console.WriteLine("Enter ending date");
+                endDate = Console.ReadLine();
+                if (re.IsMatch(endDate))
+                {
+
+                    try
+                    {
+                        DateTime dt = DateTime.Parse(endDate);
+                        break;
+                    }
+                    catch
+                    {
+                        cl("Format is correct: But date isnt correct:");
+                    }
+                }
+                else
+                {
+                    cl("Formate of date isnt Correct: Make sure it is: dd/mm/yyyy");
+                }
+            }
+
             Dictionary<String, String> values = new Dictionary<string,string>();
             values.Add("startDate", startDate);
             values.Add("endDate", endDate);
