@@ -90,6 +90,7 @@ namespace ATM_view
                 {
                     case 1:
                         while (!handleWithdrawCashMenu()) ;
+                        cl("Successfuly withdrew cash");
                         break;
                     case 2:
                         Boolean again = true;
@@ -105,11 +106,13 @@ namespace ATM_view
                             else
                             {
                                 again = false;
+                                cl("Successfuly transferred");
                             }
                         }
                         break;
                     case 3:
                         while (!handleDepositCash()) ;
+                        cl("Successfuly deposited");
                         break;
                     case 4:
                         Console.WriteLine("--Current balance--");

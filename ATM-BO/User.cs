@@ -16,7 +16,6 @@ namespace ATM_BO
             this.pinCode = pinCode;
             this.userName = userName;
             this.power = power;
-            Console.WriteLine(new Guid());
         }
     }
 

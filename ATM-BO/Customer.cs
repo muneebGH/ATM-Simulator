@@ -63,7 +63,6 @@ namespace ATM_BO
                 b = balance;
             }
 
-            Console.WriteLine($"reciept date format: ${d}");
             reciepts.Add(new Reciept(id, d, amount, b,t));
         }
 

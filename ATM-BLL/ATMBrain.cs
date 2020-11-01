@@ -57,7 +57,6 @@ namespace ATM_BLL
 
         public Boolean withdrawCash(int amount,Boolean transfer)
         {
-            Console.WriteLine($"withdrawn cash amount ${amount}");
             if (context.CurrentCustomer.status == Customer.Status.Disabled)
             {
                 context.Error = "Account disabled";

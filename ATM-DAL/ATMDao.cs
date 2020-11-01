@@ -15,8 +15,6 @@ namespace ATM_DAL
             try
             {
                 string output = JsonConvert.SerializeObject(data);
-                Console.WriteLine("saving");
-                Console.WriteLine(output);
                 System.IO.File.WriteAllText(filename, output);
             }catch(Exception e)
             {
@@ -31,7 +29,6 @@ namespace ATM_DAL
         {
             try
             {
-                Console.WriteLine("retrieving");
                 String output = System.IO.File.ReadAllText(filename);
                 return JsonConvert.DeserializeObject<ATMData>(output);
             }
