@@ -451,17 +451,53 @@ namespace ATM_view
         public Boolean handleDelExistingAccount()
         {
             Console.WriteLine("Enter the account id of account you want to delete");
-            int id = int.Parse(Console.ReadLine());
+            int id = -1;
+            while(id==-1)
+            {
+                try
+                {
+                    id = int.Parse(Console.ReadLine());
+                    if(id>=0)
+                    {
+                        break;
+                    }
+                    cl("Wrong range: try again");
+                    id = -1;
+                }
+                catch
+                {
+                    cl("bad input: Try again");
+                }
+            }
+            
             Customer cstmr = context.AllCustomers.Find(c => c.id == id);
             if (cstmr != null)
             {
-                Console.WriteLine($"You sure you wana remove {cstmr.name}");
-                if (Console.ReadLine().ToLower() == "y")
+                
+                string input = "";
+                while(input=="" || (input!="y" && input!="n"))
+                {
+                    Console.WriteLine($"You sure you wana remove {cstmr.name}");
+                    input = Console.ReadLine().ToLower();
+                }
+
+                if(input=="y")
                 {
                     brain.deleteCustomer(id);
+                    cl("Successfully deleted");
                 }
+                else
+                {
+                    cl("Customer not deleted");
+                }
+                
                 return true;
             }
+            else
+            {
+                cl("No customer with this id found");
+            }
+
             return false;
         }
 
