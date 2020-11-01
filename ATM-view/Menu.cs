@@ -35,7 +35,7 @@ namespace ATM_view
                     }
 
                 }
-                catch (Exception _) { Console.WriteLine("Wrong input: Again"); }
+                catch { Console.WriteLine("Wrong input: Again"); }
             }
             return ret;
         }
@@ -98,7 +98,7 @@ namespace ATM_view
                     {
                         cl("Wrong input range try again");
                     }
-                } catch (Exception _)
+                } catch
                 {
                     cl("Bad input: try again...");
                 }
@@ -129,7 +129,7 @@ namespace ATM_view
                         cl("bad input range: try again...");
                     }
                 }
-                catch (Exception _)
+                catch
                 {
                     cl("bad input: try again...");
                 }
@@ -182,7 +182,7 @@ namespace ATM_view
                     }
 
                 }
-                catch (Exception _)
+                catch
                 {
                     cl("bad input: try again...");
                 }
@@ -207,7 +207,7 @@ namespace ATM_view
                     {
                         cl("This input isnt allowed...");
                     }
-                } catch (Exception _)
+                } catch
                 {
                     cl("bad input: try again...");
                 }
@@ -264,7 +264,7 @@ namespace ATM_view
                         cl("Wrong input range try again");
                     }
                 }
-                catch (Exception _)
+                catch
                 {
                     cl("Bad input: try again...");
                 }
@@ -293,7 +293,7 @@ namespace ATM_view
                         cl("This amount is allowed");
                     }
                 }
-                catch(Exception _)
+                catch
                 {
                     cl("Bad input try again");
                 }
@@ -356,7 +356,7 @@ namespace ATM_view
                     }
                     cl("Wrong input: again plz");
                 }
-                catch (Exception _)
+                catch
                 {
                     cl("Bad input: Again plz");
                     balance = -1;
@@ -437,7 +437,7 @@ namespace ATM_view
                     }
                     cl("wrong input: Plz try again");
                 }
-                catch (Exception _)
+                catch
                 {
                     cl("Bad input: Again plz");
                     balance = -1;
@@ -492,7 +492,7 @@ namespace ATM_view
                     
 
                 }
-                catch(Exception e)
+                catch
                 {
                     cl("Bad input: Try again");
                     valid = false;
@@ -539,7 +539,7 @@ namespace ATM_view
                     }
     
                 }
-                catch (Exception e)
+                catch
                 {
 
                     cl("bad input: try again...");
@@ -567,7 +567,7 @@ namespace ATM_view
                     
           
                 }
-                catch (Exception e)
+                catch
                 {
                     cl("bad input: try again...");
                     repeat = true;

@@ -190,23 +190,16 @@ namespace ATM_BLL
 
         public static void contextErrorListner(String error)
         {
-            Console.WriteLine("contextErrorListner");
-            Console.WriteLine(error);
         }
         public static void contextCustomerLoggedInListner(Customer c)
         {
-            Console.WriteLine("customer logged in listner");
-            Console.WriteLine(c.name);
         }
         public static void contextCustomerLoggedOutListner(Customer c)
         {
-            Console.WriteLine("customer logged Out listner");
-            Console.WriteLine(c.name);
+
         }
         public static void contextCustomerObjChangedListner(Customer c)
         {
-            Console.WriteLine("customer obj changed listner");
-            Console.WriteLine(c.name);
         }
 
         public List<Customer> GetCustomersInBalanceRange(Dictionary<String,int> values)

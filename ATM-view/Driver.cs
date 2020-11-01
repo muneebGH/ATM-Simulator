@@ -249,7 +249,7 @@ namespace ATM_view
                         repeat = false;
                     }
                 }
-                catch (Exception e)
+                catch
                 {
                     
                     Console.WriteLine("Please enter a valid value");
@@ -423,7 +423,7 @@ namespace ATM_view
             try
             {
                 id = int.Parse(Console.ReadLine());
-            } catch(Exception e)
+            } catch
             {
                 id = null;
                
@@ -460,7 +460,7 @@ namespace ATM_view
             try
             {
                 balance = int.Parse(Console.ReadLine());
-            }catch(Exception e)
+            }catch
             {
                 
                 balance = null;
