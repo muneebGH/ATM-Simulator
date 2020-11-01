@@ -32,7 +32,7 @@ namespace ATM_DAL
                 String output = System.IO.File.ReadAllText(filename);
                 return JsonConvert.DeserializeObject<ATMData>(output);
             }
-            catch(Exception e)
+            catch
             {
                 Console.WriteLine("File not found to retrieve data");
                 Console.WriteLine("If its your first login, Dont worry it will be created once you exit the session");
