@@ -395,13 +395,14 @@ namespace ATM_view
 
             Console.WriteLine("Holders name");
             name = Console.ReadLine();
-        
 
-            while (type != "" || (type != "savings" && type != "current"))
+            do
             {
                 Console.WriteLine("Type: Savings / Current ");
                 type = Console.ReadLine().ToLower();
             }
+            while (type != "" && (type != "savings" && type != "current"));
+            
             Customer.AccountType accType;
             if (type == "savings")
             {
@@ -436,12 +437,13 @@ namespace ATM_view
                 }
             }
 
-
-            while (status != "" || (status != "active" && status != "disabled"))
+            do
             {
                 Console.WriteLine("Status: Active/Disabled");
                 status = Console.ReadLine().ToLower();
             }
+            while (status != "" && (status != "active" && status != "disabled"));
+           
 
             Customer.Status accStatus;
 
@@ -472,10 +474,20 @@ namespace ATM_view
                 try
                 {
                     id = int.Parse(Console.ReadLine());
-                    valid = true;
+                    if(id>=0)
+                    {
+                        valid = true;
+                    }
+                    else
+                    {
+                        cl("Wrong input range: Try again..");
+                    }
+                    
+
                 }
                 catch(Exception e)
                 {
+                    cl("Bad input: Try again");
                     valid = false;
                 }
                

@@ -334,15 +334,24 @@ namespace ATM_view
                         
                         break;
                     case 3:
-
-                        int id;
-                        do
+                        while(true)
                         {
-                            id = menu.getCustomerID();
+                            int id = menu.getCustomerID();
                             c = brain.getInfoOfCustomerByID(id);
-                        } while (context.HasError);
-                        c = menu.getNewCustomerInfoToUpdate(id);
-                        brain.updateCustomer(c);
+                            if(context.HasError)
+                            {
+                                cl(context.Error);
+                                context.clearErrors();
+
+                            }
+                            else
+                            {
+                                c = menu.getNewCustomerInfoToUpdate(id);
+                                brain.updateCustomer(c);
+                                break;
+                            }
+                            
+                        }
                         break;
                     case 4:
                         menu.displaySearchedCustomers(getSearchForCustomerInfo());
