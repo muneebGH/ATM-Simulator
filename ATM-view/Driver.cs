@@ -400,12 +400,11 @@ namespace ATM_view
                 List<Customer.Reciept> reciepts = brain.getCustomerRecieptsInRange(values["startDate"], values["endDate"]);
                 foreach(Customer.Reciept r in reciepts)
                 {
-                    cl($"Reciept type: ${r.recieptType.ToString()}");
-                    cl($"userid : ${r.id}");
-                    cl($"Holders name: ${brain.getInfoOfCustomerByID(r.id).name}");
-                    cl($"Amount : ${r.amountAddedOrSubtracted}");
-                    string d = r.date.ToString();
-                    cl($"Date : ${d.Remove(d.Length - 11, 11)}");
+                    cl($"Reciept type: {r.recieptType.ToString()}");
+                    cl($"userid : {r.id}");
+                    cl($"Holders name: {brain.getInfoOfCustomerByID(r.id).name}");
+                    cl($"Amount : {r.amountAddedOrSubtracted}");
+                    cl($"Date : {r.date}");
 
                 }
             }
